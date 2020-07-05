@@ -20,7 +20,7 @@ int turn_right_xx (int grade)
   int movement_result=0;
 
   int lenght_curve = (grade*(ROBOT_LARGE*6.28))/360; //grade / 360° = lenght_curve / (ROBOT_LARGE*6.28)
-  float seg_time = segment_time((int)WHEEL_DIAMETER, lenght_curve);
+  float seg_time = segment_time((int)WHEEL_DIAMETER, lenght_curve * CURVE_PROBLEM);
   
   movement_result=engines_right(seg_time);
   return movement_result;
@@ -31,7 +31,7 @@ int turn_left_xx (int grade)
   int movement_result=0;
 
   int lenght_curve = (grade*(ROBOT_LARGE*6.28))/360; //grade / 360° = lenght_curve / (ROBOT_LARGE*6.28)
-  float seg_time = segment_time((int)WHEEL_DIAMETER, lenght_curve);
+  float seg_time = segment_time((int)WHEEL_DIAMETER, lenght_curve * CURVE_PROBLEM);
   
   movement_result=engines_left(seg_time);
   return movement_result;

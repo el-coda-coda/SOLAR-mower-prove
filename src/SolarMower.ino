@@ -41,10 +41,11 @@ void setup()
 }
 void loop() 
 {
+  esc_on();
   rectangle_path(300, 100);
   logDebug(String("RETTANGOLO FINITO"));
   delay(10000);
-  go_back(310);
+  go_back(350);
   turn_right90();
   go_forward1(100);
   turn_left90;

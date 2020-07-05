@@ -78,6 +78,7 @@ int PEN=3;
 #define distanza_curva  20
 #define ROBOT_LARGE 50
 #define BLADE_LARGE 23
+#define CURVE_PROBLEM 2 // il robot quando gira su una sola ruota impiega il doppio del tempo a fare la stessa strada
 //LCD
 #define DEBUG_LEVEL   5
 #define INFO_LEVEL   1
