@@ -72,7 +72,7 @@ int PEN=3;
 #define MOVEMENT_OK  0
 //wheel diameter in centimeters
 #define WHEEL_DIAMETER 12
-#define RPM 30
+#define RPM 25
 #define CURVE_LENGHT 65.94
 
 #define distanza_curva  20
@@ -92,10 +92,10 @@ int PEN=3;
 #define RECTANGLE_ENABLED true
 #define MOVEMENT_ENABLED true
 #define ULTRASONIC_ENABLED false
-#define ESC_ENABLED false
+#define ESC_ENABLED true
 #define LOG_TO_SERIAL true
 #define LOG_TO_LCD true
-#define LOG_LEVEL  7 //1 INFO, 5 DEBUG , 7 VERBOSE DEBUG
+#define LOG_LEVEL  1    //1 INFO, 5 DEBUG , 7 VERBOSE DEBUG
 #define RECTANGLE_MODE_1    1
 #define RECTANGLE_MODE_0    0
 
@@ -143,5 +143,5 @@ int distanza2 = 0;
 int ON_OFF = 1;
 int  ON_OFF_ESC_PIN = 4;
 int rectangle_mode = 0;
-int x_array = 0;
-int y_array = 0;
+//int x_array = 0;
+//int y_array = 0;

@@ -101,20 +101,21 @@ int go_forward1(float segment_length)
   return movement_result;
 }
 
-int go_forward(float segment_length) 
+int go_forward(float segment_length, int &x_array) 
 {
     int movement_result=0;
     float seg_time = 0.0;
     seg_time = segment_time(WHEEL_DIAMETER, 5);
     logDebug(String("Segment length (cm): ") + String(segment_length));
-    int curr_start_time = millis();
-    logVerbose(String("GO FORWARD START TIME: ") + String(curr_start_time));
+    long start_time = millis();
+
     while (x_array > 0 && movement_result == MOVEMENT_OK)
     {
       movement_result = engines_forward(seg_time);
       x_array -= 5;
       logDebug(String("x_array: ") + String(x_array));
     }
+    
     if (movement_result != MOVEMENT_OK) 
     {
         if (movement_result == MOVEMENT_GENERIC_ERROR) 
@@ -130,12 +131,12 @@ int go_forward(float segment_length)
           movement_result = sensorReading(US_READ);   
         }
     }
-  logVerbose(String("GO FORWARD END: DURATION: ") + String(millis()-curr_start_time));
+  logInfo(String("GO FORWARD END: DURATION: ") + String(millis()-start_time));
   return movement_result;
 }
 
 // Prove per vedere come aggirare un ostacolo
-int aggira (int movement_result)
+int aggira (int movement_result, int &x_array, int &y_array)
 {
   int curve_result = MOVEMENT_OBSTACLE_FOUND;
   int come_back = 0;

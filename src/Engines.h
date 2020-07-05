@@ -55,7 +55,7 @@ int engines_movement_controlled(float duration, int power_left, int power_right)
 {
   if (MOVEMENT_ENABLED)
   {
-    logDebug(String("engines_movement_controlled::engines go"));
+    logDebug(String("engines_movement_controlled: ENGINES GO"));
     if (power_right < 0 && power_left < 0)  engines(power_left+ENIGNE_LEFT_OFFSET, power_right+ENGINE_RIGHT_OFFSET);
     else engines(power_left-ENIGNE_LEFT_OFFSET, power_right-ENGINE_RIGHT_OFFSET);
     
@@ -63,10 +63,6 @@ int engines_movement_controlled(float duration, int power_left, int power_right)
     long curr_time = 0;
     long time_offset = millis();
     int movement_result = 0;
-    
-    //logDebug(String("duration (sec): ") + String(duration));
-    //logDebug(String("duration (ms): ") + String(duration_millseconds));
-
     while ((curr_time < duration_millseconds) && movement_result == MOVEMENT_OK)
     {
         if (us_query == 2) 
@@ -75,16 +71,14 @@ int engines_movement_controlled(float duration, int power_left, int power_right)
           if (movement_result != MOVEMENT_OK) movement_result = MOVEMENT_OBSTACLE_FOUND;
           us_query = 0;
         }
-        //delay(100);
         curr_time = millis() - time_offset; 
         us_query ++;
         logVerbose(String("CURR TIME: ") + String(curr_time));
     }
-    
+    engines_stop();
     if (!RECTANGLE_ENABLED && movement_result == MOVEMENT_OK)
     {
       movement_result = CURVE_LEFT;
-      //logDebug(String("Lunghezza curva") + String(CURVE_LENGHT));
     }
     return movement_result;
   }

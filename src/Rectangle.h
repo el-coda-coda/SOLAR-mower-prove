@@ -10,8 +10,8 @@ void rectangle_path (int lato_piano, int lato_inclinato)
     int passate =  (int)(lato_inclinato / BLADE_LARGE);
     int avanzo = lato_inclinato % BLADE_LARGE;
     int ultimo_passaggio = ROBOT_LARGE - avanzo;
-    x_array = lato_piano;
-    y_array = lato_inclinato;
+    int x_array = lato_piano;
+    int y_array = lato_inclinato;
     while (passate >= a)
     {   x_array = lato_piano;
         y_array -= ROBOT_LARGE;
@@ -58,7 +58,7 @@ void rectangle_path (int lato_piano, int lato_inclinato)
             }
         }
         logDebug(String("GO X"));
-        movement_result = go_forward(lato_piano);
+        movement_result = go_forward1(lato_piano);
         engines_stop();
         if (movement_result!= MOVEMENT_OK)
         {
@@ -71,7 +71,7 @@ void rectangle_path (int lato_piano, int lato_inclinato)
             }
             else
             {
-                aggira(movement_result);
+                aggira(movement_result, x_array, y_array);
             }        
         }
         if (y_array < ROBOT_LARGE)
