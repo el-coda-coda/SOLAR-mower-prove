@@ -1,17 +1,23 @@
+QMC5883L compass;
+
 void sensorInit()
 {
-   IPanelOffset=0;
-   ICutOffset=0;
-   for (i=0; i<50; i++)
-   {                                    
-      IPanelOffset += analogRead(IPANEL_PIN);
-      delay(20);
-      ICutOffset += analogRead(ICUT_PIN);      
-      delay(20);
-   }
-   IPanelOffset /= i; 
-   ICutOffset /= i;
-   logDebug(String("PANEL SETUP: ") + String(IPanelOffset));
+  IPanelOffset=0;
+  ICutOffset=0;
+  for (i=0; i<50; i++)
+  {                                    
+    IPanelOffset += analogRead(IPANEL_PIN);
+    delay(20);
+    ICutOffset += analogRead(ICUT_PIN);      
+    delay(20);
+  }
+  IPanelOffset /= i; 
+  ICutOffset /= i;
+  logDebug(String("PANEL SETUP: ") + String(IPanelOffset));
+  compass.init();
+	compass.setSamplingRate(50);
+  compass.resetCalibration();
+  logDebug(String("COMPASS SETUP: RUOTA IL ROBOT"));
 }
 
 float sensorReading(int type)
@@ -114,7 +120,11 @@ float sensorReading(int type)
         return MOVEMENT_OK;
     }
   }
-
+  if (type == COMPASS_READ)
+  {
+    heading = compass.readHeading();
+    logInfo(String("Compass: ") + String(heading));
+  }
 }  
 int sensorReading_all ()
 {

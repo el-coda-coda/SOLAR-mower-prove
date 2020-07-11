@@ -90,6 +90,7 @@ int PEN=3;
 #define ESC_READ    3
 #define US_READ 4
 #define PANEL_READ_AMP  5
+#define COMPASS_READ    6
 #define RECTANGLE_ENABLED true
 #define MOVEMENT_ENABLED false
 #define ULTRASONIC_ENABLED false
@@ -146,3 +147,4 @@ int  ON_OFF_ESC_PIN = 4;
 int rectangle_mode = 0;
 //int x_array = 0;
 //int y_array = 0;
+int heading;

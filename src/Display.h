@@ -15,5 +15,7 @@ void setupLCD() {
 void display_print(int row, String message) {
     if (!lcd_initialized)   setupLCD();
     lcd.setCursor(0,row);
+    lcd.print("                ");
+    lcd.setCursor(0, row);
     lcd.print(message);
 }
