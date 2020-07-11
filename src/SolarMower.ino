@@ -2,12 +2,14 @@
 #include <SoftwareSerial.h>
 #include <Wire.h>
 #include <QMC5883L.h>
+#include <LiquidCrystal_I2C.h>
 #include "Configuration.h"
 #include "Display.h"
 #include "Logging.h"
 #include "Ultrasuoni_SRF04.h"
 #include "Sensors.h"
 #include "Esc_control.h"
+#include "Compass.h"
 #include "Engines.h"
 #include "Segments.h"
 #include "Rectangle.h"
@@ -44,5 +46,7 @@ void setup()
 void loop() 
 {
   sensorReading(COMPASS_READ);
+  delay(500);
+  sensorReading(BATTERY_READ);
   delay(500);
 }

@@ -53,6 +53,7 @@ int engines_stop()
 // //Moves left at max power for <duration> seconds
 int engines_movement_controlled(float duration, int power_left, int power_right) 
 {
+  compassOffSet = sensorReading(COMPASS_READ);
   if (MOVEMENT_ENABLED)
   {
     logDebug(String("engines_movement_controlled: ENGINES GO"));

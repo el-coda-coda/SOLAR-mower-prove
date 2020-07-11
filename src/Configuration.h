@@ -148,3 +148,4 @@ int rectangle_mode = 0;
 //int x_array = 0;
 //int y_array = 0;
 int heading;
+int compassOffSet; 
