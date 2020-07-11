@@ -91,9 +91,9 @@ int PEN=3;
 #define US_READ 4
 #define PANEL_READ_AMP  5
 #define RECTANGLE_ENABLED true
-#define MOVEMENT_ENABLED true
+#define MOVEMENT_ENABLED false
 #define ULTRASONIC_ENABLED false
-#define ESC_ENABLED true
+#define ESC_ENABLED false
 #define LOG_TO_SERIAL true
 #define LOG_TO_LCD true
 #define LOG_LEVEL  1    //1 INFO, 5 DEBUG , 7 VERBOSE DEBUG
