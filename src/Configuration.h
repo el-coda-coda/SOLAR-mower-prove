@@ -92,7 +92,7 @@ int PEN=3;
 #define PANEL_READ_AMP  5
 #define COMPASS_READ    6
 #define RECTANGLE_ENABLED true
-#define MOVEMENT_ENABLED false
+#define MOVEMENT_ENABLED true
 #define ULTRASONIC_ENABLED false
 #define ESC_ENABLED false
 #define LOG_TO_SERIAL true

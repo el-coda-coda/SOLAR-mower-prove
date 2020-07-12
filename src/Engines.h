@@ -50,14 +50,14 @@ int engines_stop()
 }
 
 
-int engines_movement(float duration, int power_left, int power_right) 
+int engines_movement(double duration, int power_left, int power_right) 
 {
   if (MOVEMENT_ENABLED)
   {
     if (power_right < 0 && power_left < 0)  engines(power_left+ENIGNE_LEFT_OFFSET, power_right+ENGINE_RIGHT_OFFSET);
     else engines(power_left-ENIGNE_LEFT_OFFSET, power_right-ENGINE_RIGHT_OFFSET);
     
-    int duration_millseconds = (int)(duration * 1000);
+    long duration_millseconds = (float)(duration * 1000);
     long curr_time = 0;
     long time_offset = millis();
     int movement_result = 0;
@@ -68,7 +68,6 @@ int engines_movement(float duration, int power_left, int power_right)
         curr_time = millis() - time_offset;
         
     }
-    engines(0,0);
     
     return movement_result;
   }
@@ -78,48 +77,61 @@ int engines_movement(float duration, int power_left, int power_right)
 
 
 //Moves left at max power for <duration> seconds
-int engines_left(float duration) {
+int engines_left(double duration) {
    return engines_movement(duration, 0, ENGINE_MAX); 
 }
 
 //Moves right at max power
-int engines_right(float duration) {
+int engines_right(double duration) {
    return engines_movement(duration, ENGINE_MAX, 0);
 }
 
 
 //Moves back at max power
-int engines_back(float duration) {
+int engines_back(double duration) {
   return engines_movement(duration,-ENGINE_MAX, -ENGINE_MAX);
 }
 
 // //Moves left at max power for <duration> seconds
-int engines_movement_controlled(float duration, int power_left, int power_right) 
+int engines_movement_controlled(double duration, int power_left, int power_right) 
 {
-  compassOffSet = sensorReading(COMPASS_READ);
+  
   if (MOVEMENT_ENABLED)
   {
     logDebug(String("engines_movement_controlled: ENGINES GO"));
-    if (power_right < 0 && power_left < 0)  engines(power_left+ENIGNE_LEFT_OFFSET, power_right+ENGINE_RIGHT_OFFSET);
-    else engines(power_left-ENIGNE_LEFT_OFFSET, power_right-ENGINE_RIGHT_OFFSET);
     
-    int duration_millseconds = (int)(duration * 1000);
+    
+    long duration_millseconds = (float)(duration * 1000);
+    logInfo(String("DURATION: ") + String(duration_millseconds));
     long curr_time = 0;
     long time_offset = millis();
     int movement_result = 0;
     while ((curr_time < duration_millseconds) && movement_result == MOVEMENT_OK)
     {
+        // if (power_right < 0 && power_left < 0)  engines(power_left+ENIGNE_LEFT_OFFSET, power_right+ENGINE_RIGHT_OFFSET);
+        // else engines(power_left-ENIGNE_LEFT_OFFSET, power_right-ENGINE_RIGHT_OFFSET);
+        
         if (us_query == 2) 
         {
           movement_result = sensorReading(US_READ);
           if (movement_result != MOVEMENT_OK) movement_result = MOVEMENT_OBSTACLE_FOUND;
           us_query = 0;
         }
-        long timeOffset = millis();
-        while (qmc() =! MOVEMENT_OK)
-        
+        long timeOffset_qmc = millis();
+        if (qmc() == CURVE_LEFT)
+        {
+          engines(ENGINE_MAX/2, 0);
+          logInfo(String("GIRO A DESTRA BUSSOLA"));
+        }
+        if (qmc() == CURVE_RIGHT)
+        {
+          engines(0, ENGINE_MAX/2);
+          logInfo(String("GIRO A SINISTRA BUSSOLA"));
+        }
+        long time_qmc = millis() - timeOffset_qmc; 
+        if (qmc() == MOVEMENT_OK)  engines(power_left, power_right);;
         curr_time = millis() - time_offset;
-        curr_time +=time_to_recup; 
+        curr_time -= time_qmc; 
         us_query ++;
         logVerbose(String("CURR TIME: ") + String(curr_time));
     }
@@ -133,7 +145,7 @@ int engines_movement_controlled(float duration, int power_left, int power_right)
 }
 
 //Moves forward at max power
-int engines_forward(float duration) {
+int engines_forward(double duration) {
   return engines_movement_controlled(duration,ENGINE_MAX, ENGINE_MAX);
 }
 

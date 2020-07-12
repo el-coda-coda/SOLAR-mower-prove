@@ -15,7 +15,7 @@ float segment_time(int wheel_diamater,float segment_length)
 
 }
 
-int turn_right_xx (int grade)
+int turn_right_xx (float grade)
 {
   int movement_result=0;
 
@@ -26,7 +26,7 @@ int turn_right_xx (int grade)
   return movement_result;
 }
 
-int turn_left_xx (int grade)
+int turn_left_xx (float grade)
 {
   int movement_result=0;
 

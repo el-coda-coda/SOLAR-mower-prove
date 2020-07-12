@@ -42,11 +42,16 @@ void setup()
   sensorReading(PANEL_READ_AMP);  
   digitalWrite(Panel_PIN, HIGH);
   delay(300);
+  for(int vc=0; vc <100; vc ++)
+  {
+    sensorReading(COMPASS_READ);
+  }
 }
 void loop() 
 {
-  sensorReading(COMPASS_READ);
-  delay(500);
-  sensorReading(BATTERY_READ);
-  delay(500);
+  compassOffSet = sensorReading(COMPASS_READ);
+  
+  engines_forward(10);
+  //qmc_prova();
+  delay(1000);
 }

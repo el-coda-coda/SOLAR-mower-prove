@@ -123,7 +123,8 @@ float sensorReading(int type)
   if (type == COMPASS_READ)
   {
     heading = compass.readHeading();
-    logInfo(String("Compass: ") + String(heading));
+    logDebug(String("Compass: ") + String(heading));
+    return heading;
   }
 }  
 int sensorReading_all ()
