@@ -15,54 +15,42 @@ float segment_time(int wheel_diamater,float segment_length)
 
 }
 
-int turn_right_xx (float grade)
+int turn_right_xx (int grade)
 {
   int movement_result=0;
-
-  int lenght_curve = (grade*(ROBOT_LARGE*6.28))/360; //grade / 360° = lenght_curve / (ROBOT_LARGE*6.28)
-  float seg_time = segment_time((int)WHEEL_DIAMETER, lenght_curve * CURVE_PROBLEM);
-  
-  movement_result=engines_right(seg_time);
+  engines_right(grade);
   return movement_result;
 }
 
-int turn_left_xx (float grade)
+int turn_left_xx (int grade)
 {
   int movement_result=0;
-
-  int lenght_curve = (grade*(ROBOT_LARGE*6.28))/360; //grade / 360° = lenght_curve / (ROBOT_LARGE*6.28)
-  float seg_time = segment_time((int)WHEEL_DIAMETER, lenght_curve * CURVE_PROBLEM);
-  
-  movement_result=engines_left(seg_time);
+  engines_left(grade);
   return movement_result;
 }
 
 int turn_right180() {
   int movement_result=0;
-
-  movement_result=turn_right_xx(180);
+  turn_right_xx(180);
   return movement_result;
 }
 
 
 int turn_left180() {
   int movement_result=0;
-  
-  movement_result=turn_left_xx(180);
+  turn_left_xx(180);
   return movement_result;
 }
 int turn_right90() {
   int movement_result=0;
-
-  movement_result=turn_right_xx(90);
+  turn_right_xx(90);
   return movement_result;
 }
 
 
 int turn_left90() {
   int movement_result=0;
-  
-  movement_result=turn_left_xx(90);
+  turn_left_xx(90);
   return movement_result;
 }
 

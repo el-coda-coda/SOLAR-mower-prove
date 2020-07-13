@@ -45,13 +45,18 @@ void setup()
   for(int vc=0; vc <100; vc ++)
   {
     sensorReading(COMPASS_READ);
+    delay(100);
   }
 }
 void loop() 
 {
-  compassOffSet = sensorReading(COMPASS_READ);
+  //compassOffSet = sensorReading(COMPASS_READ);
   
-  engines_forward(10);
+  //engines_forward(5);
+  compassOffSet = sensorReading(COMPASS_READ);
+  logInfo(String("Inizio a girare"));
+  turn_right90();
   //qmc_prova();
+  // logInfo(String("BUSSOLA: ") + String(sensorReading(COMPASS_READ)));
   delay(1000);
 }

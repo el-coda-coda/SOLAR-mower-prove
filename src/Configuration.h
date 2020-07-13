@@ -149,3 +149,5 @@ int rectangle_mode = 0;
 //int y_array = 0;
 int heading;
 int compassOffSet; 
+int curve_to_do;
+int variabile;

@@ -77,13 +77,21 @@ int engines_movement(double duration, int power_left, int power_right)
 
 
 //Moves left at max power for <duration> seconds
-int engines_left(double duration) {
-   return engines_movement(duration, 0, ENGINE_MAX); 
+int engines_left(int xx) {
+  while (qmc_curva(CURVE_LEFT, xx) == CURVE_LEFT)
+  {
+    engines(0, ENGINE_MAX);
+  }
+  engines_stop();
 }
 
 //Moves right at max power
-int engines_right(double duration) {
-   return engines_movement(duration, ENGINE_MAX, 0);
+int engines_right(int xx) {
+  while (qmc_curva(CURVE_RIGHT, xx) == CURVE_RIGHT)
+  {
+    engines(ENGINE_MAX, 0);
+  }
+  engines_stop();
 }
 
 
@@ -102,7 +110,7 @@ int engines_movement_controlled(double duration, int power_left, int power_right
     
     
     long duration_millseconds = (float)(duration * 1000);
-    logInfo(String("DURATION: ") + String(duration_millseconds));
+    logVerbose(String("DURATION: ") + String(duration_millseconds));
     long curr_time = 0;
     long time_offset = millis();
     int movement_result = 0;
@@ -118,18 +126,18 @@ int engines_movement_controlled(double duration, int power_left, int power_right
           us_query = 0;
         }
         long timeOffset_qmc = millis();
-        if (qmc() == CURVE_LEFT)
+        if (qmc_straight() == CURVE_LEFT)
         {
-          engines(ENGINE_MAX/2, 0);
+          engines(ENGINE_MAX, -ENGINE_MAX);
           logInfo(String("GIRO A DESTRA BUSSOLA"));
         }
-        if (qmc() == CURVE_RIGHT)
+        if (qmc_straight() == CURVE_RIGHT)
         {
-          engines(0, ENGINE_MAX/2);
+          engines(-ENGINE_MAX, ENGINE_MAX);
           logInfo(String("GIRO A SINISTRA BUSSOLA"));
         }
         long time_qmc = millis() - timeOffset_qmc; 
-        if (qmc() == MOVEMENT_OK)  engines(power_left, power_right);;
+        if (qmc_straight() == MOVEMENT_OK)  engines(power_left, power_right);;
         curr_time = millis() - time_offset;
         curr_time -= time_qmc; 
         us_query ++;

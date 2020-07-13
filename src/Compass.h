@@ -1,17 +1,17 @@
 long bussola ()
 {
     int degrees = sensorReading(COMPASS_READ);
-    logInfo(String("DEGREES: ") + String(degrees));
+    logVerbose(String("DEGREES: ") + String(degrees));
     return degrees;
 }
-long qmc()
+long qmc_straight()
 {
     int movement_to_do;
     bool turn_left;
     bool turn_right;
-    if (bussola() < (compassOffSet - 3))   turn_left = true;
+    if (bussola() < (compassOffSet - 2))   turn_left = true;
     else turn_left = false;
-    if (bussola() > (compassOffSet + 3))   turn_right = true;
+    if (bussola() > (compassOffSet + 2))   turn_right = true;
     else turn_right = false;
     if (turn_right == false && turn_left == false)  movement_to_do = MOVEMENT_OK;
     if (turn_right) movement_to_do = CURVE_RIGHT;
@@ -20,9 +20,27 @@ long qmc()
     return movement_to_do;
 }
 
+long qmc_curva (int curve, int xx)
+{
+    if (curve == CURVE_RIGHT)   
+    {
+        variabile = compassOffSet + xx;
+        if (variabile > 360)    variabile -= 360;
+    }
+    if (curve == CURVE_LEFT)
+    {
+        variabile = compassOffSet - xx;
+        if (variabile < 0)    variabile += 360;
+    }
+    logVerbose(String("Var: ") + String(variabile));
+    if (curve == CURVE_RIGHT && (variabile > (bussola()-2) && variabile < (bussola() + 2))) curve_to_do = CURVE_RIGHT;
+    if (curve == CURVE_LEFT && (variabile > (bussola()-2) && variabile < (bussola() + 2)))  curve_to_do = CURVE_LEFT;
+    if (variabile == bussola()) curve_to_do = MOVEMENT_OK;
+    return curve_to_do;
+}
 
 void qmc_prova ()
 {
-    int cose = (int) (qmc());
+    int cose = (int) (qmc_straight());
     logInfo(String("RISULTATO: ") + String(cose));
 }
