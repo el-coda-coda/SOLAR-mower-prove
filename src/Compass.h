@@ -22,6 +22,7 @@ long qmc_straight()
 
 long qmc_curva (int curve, int xx)
 {
+    int deg = bussola();
     if (curve == CURVE_RIGHT)   
     {
         variabile = compassOffSet + xx;
@@ -33,8 +34,8 @@ long qmc_curva (int curve, int xx)
         if (variabile < 0)    variabile += 360;
     }
     logVerbose(String("Var: ") + String(variabile));
-    if (curve == CURVE_RIGHT && (variabile > (bussola()-2) && variabile < (bussola() + 2))) curve_to_do = CURVE_RIGHT;
-    if (curve == CURVE_LEFT && (variabile > (bussola()-2) && variabile < (bussola() + 2)))  curve_to_do = CURVE_LEFT;
+    if (curve == CURVE_RIGHT && (variabile > (deg -2) || variabile < (deg + 2))) curve_to_do = CURVE_RIGHT;
+    if (curve == CURVE_LEFT && (variabile > (deg-2) || variabile < (deg + 2)))  curve_to_do = CURVE_LEFT;
     if (variabile == bussola()) curve_to_do = MOVEMENT_OK;
     return curve_to_do;
 }
