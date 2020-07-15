@@ -77,19 +77,29 @@ int engines_movement(double duration, int power_left, int power_right)
 
 
 //Moves left at max power for <duration> seconds
-int engines_left(float xx) {
-  while (qmc_curva(CURVE_LEFT, xx) == CURVE_LEFT)
+int engines_left(int xx) {
+  engines(0, ENGINE_MAX);
+  int degrees = 1;
+  int i = 0;
+  while (degrees >= 0)
   {
-    engines(0, ENGINE_MAX);
+    degrees = qmc_curva_test( xx-i);
+    logInfo(String("DEG CD: ") + String(degrees));
+    i++;
   }
   engines_stop();
 }
 
 //Moves right at max power
-int engines_right(float xx) {
-  while (qmc_curva(CURVE_RIGHT, xx) == CURVE_RIGHT)
+int engines_right(int xx) {
+  engines(ENGINE_MAX, 0);
+  int degrees = 1;
+  int i = 0;
+  while (degrees >= 0)
   {
-    engines(ENGINE_MAX, 0);
+    degrees = qmc_curva_test((xx-i));
+    logInfo(String("DEG CD: ") + String(degrees));
+    i++;
   }
   engines_stop();
 }

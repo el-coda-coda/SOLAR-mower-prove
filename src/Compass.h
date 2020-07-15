@@ -1,6 +1,6 @@
 long bussola ()
 {
-    float degrees = sensorReading(COMPASS_READ);
+    int degrees = sensorReading(COMPASS_READ);
     logVerbose(String("DEGREES: ") + String(degrees));
     return degrees;
 }
@@ -22,7 +22,7 @@ long qmc_straight()
 
 long qmc_curva (int curve, int xx)
 {
-    float deg = bussola();
+    int deg = sensorReading(COMPASS_READ);
     if (curve == CURVE_RIGHT)   
     {
         variabile = compassOffSet + xx;
@@ -34,10 +34,19 @@ long qmc_curva (int curve, int xx)
         if (variabile < 0)    variabile += 360;
     }
     logVerbose(String("Var: ") + String(variabile));
-    if (curve == CURVE_RIGHT && ((variabile - 2) < deg || (variabile + 2) > deg)) curve_to_do = CURVE_RIGHT;
-    if (curve == CURVE_LEFT && ((variabile - 2) < deg || (variabile + 2) > deg))  curve_to_do = CURVE_LEFT;
-    if (variabile == bussola()) curve_to_do = MOVEMENT_OK;
-    return curve_to_do;
+   
+    long diff = variabile - deg;
+    if (diff < 0)  diff *= -1;
+    logInfo(String("DIFF: ") + String(diff));
+    return diff;
+}
+int qmc_curva_test (int zz)
+{
+    int compass1 = sensorReading(COMPASS_READ);
+    int degrees = zz;
+    while (sensorReading(COMPASS_READ) == compass1) delay(10);
+    degrees --;
+    return zz;
 }
 
 void qmc_prova ()

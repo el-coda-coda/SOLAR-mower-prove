@@ -42,10 +42,11 @@ void setup()
   sensorReading(PANEL_READ_AMP);  
   digitalWrite(Panel_PIN, HIGH);
   delay(300);
-  for(int vc=0; vc <100; vc ++)
+  for(int vc=0; vc <10; vc ++)
   {
     sensorReading(COMPASS_READ);
-    turn_left_xx(3.6);
+    //turn_left_xx(36);
+    delay(1000);
   }
 }
 void loop() 
