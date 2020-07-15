@@ -147,7 +147,7 @@ int  ON_OFF_ESC_PIN = 4;
 int rectangle_mode = 0;
 //int x_array = 0;
 //int y_array = 0;
-int heading;
+float heading;
 int compassOffSet; 
 int curve_to_do;
 int variabile;

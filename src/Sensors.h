@@ -134,6 +134,7 @@ int sensorReading_all ()
   sensorReading(PANEL_READ_AMP);
   sensorReading(ESC_READ);
   sensorReading(US_READ);
+  sensorReading(COMPASS_READ);
 }
 
 int Button(int buttonPin)

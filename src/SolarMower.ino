@@ -45,7 +45,7 @@ void setup()
   for(int vc=0; vc <100; vc ++)
   {
     sensorReading(COMPASS_READ);
-    delay(100);
+    turn_left_xx(3.6);
   }
 }
 void loop() 

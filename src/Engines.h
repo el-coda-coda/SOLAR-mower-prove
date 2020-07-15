@@ -77,7 +77,7 @@ int engines_movement(double duration, int power_left, int power_right)
 
 
 //Moves left at max power for <duration> seconds
-int engines_left(int xx) {
+int engines_left(float xx) {
   while (qmc_curva(CURVE_LEFT, xx) == CURVE_LEFT)
   {
     engines(0, ENGINE_MAX);
@@ -86,7 +86,7 @@ int engines_left(int xx) {
 }
 
 //Moves right at max power
-int engines_right(int xx) {
+int engines_right(float xx) {
   while (qmc_curva(CURVE_RIGHT, xx) == CURVE_RIGHT)
   {
     engines(ENGINE_MAX, 0);
