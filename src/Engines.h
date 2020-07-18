@@ -110,29 +110,29 @@ int engines_movement_controlled(double duration, int power_left, int power_right
     long curr_time = 0;
     long time_offset = millis();
     int movement_result = 0;
+    long time_qmc = 0;
+    long timeOffset_qmc = 0;
     while ((curr_time < duration_millseconds) && movement_result == MOVEMENT_OK)
     {
         // if (power_right < 0 && power_left < 0)  engines(power_left+ENIGNE_LEFT_OFFSET, power_right+ENGINE_RIGHT_OFFSET);
         // else engines(power_left-ENIGNE_LEFT_OFFSET, power_right-ENGINE_RIGHT_OFFSET);
-        
+        time_qmc = 0;
         if (us_query == 2) 
         {
           movement_result = sensorReading(US_READ);
           if (movement_result != MOVEMENT_OK) movement_result = MOVEMENT_OBSTACLE_FOUND;
           us_query = 0;
         }
-        long timeOffset_qmc = millis();
+        timeOffset_qmc = millis();
         if (qmc_straight() == CURVE_LEFT)
         {
-          engines(ENGINE_MAX, -ENGINE_MAX);
-          logInfo(String("GIRO A DESTRA BUSSOLA"));
+          engines_left(3);
         }
         if (qmc_straight() == CURVE_RIGHT)
         {
-          engines(-ENGINE_MAX, ENGINE_MAX);
-          logInfo(String("GIRO A SINISTRA BUSSOLA"));
+          engines_right(3);
         }
-        long time_qmc = millis() - timeOffset_qmc; 
+        time_qmc = millis() - timeOffset_qmc; 
         if (qmc_straight() == MOVEMENT_OK)  engines(power_left, power_right);;
         curr_time = millis() - time_offset;
         curr_time -= time_qmc; 

@@ -1,7 +1,7 @@
 #include <EEPROM.h>
 #include <SoftwareSerial.h>
 #include <Wire.h>
-#include <QMC5883L.h>
+#include <QMC5883LCompass.h>
 #include <LiquidCrystal_I2C.h>
 #include "Configuration.h"
 #include "Display.h"
@@ -42,17 +42,11 @@ void setup()
   sensorReading(PANEL_READ_AMP);  
   digitalWrite(Panel_PIN, HIGH);
   delay(300);
-  for(int vc=0; vc <10; vc ++)
-  {
-    sensorReading(COMPASS_READ);
-    //turn_left_xx(36);
-    delay(1000);
-  }
 }
 void loop ()
 {
   logInfo(String(sensorReading(COMPASS_READ)));
   compassOffSet = sensorReading(COMPASS_READ);
-  engines_forward(2);
+  engines_forward(5);
   delay(2000);
 }

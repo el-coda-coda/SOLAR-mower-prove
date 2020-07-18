@@ -1,4 +1,4 @@
-QMC5883L compass;
+QMC5883LCompass compass;
 
 void sensorInit()
 {
@@ -15,8 +15,7 @@ void sensorInit()
   ICutOffset /= i;
   logDebug(String("PANEL SETUP: ") + String(IPanelOffset));
   compass.init();
-	compass.setSamplingRate(50);
-  compass.resetCalibration();
+  compass.read();
   logDebug(String("COMPASS SETUP: RUOTA IL ROBOT"));
 }
 
@@ -122,7 +121,8 @@ float sensorReading(int type)
   }
   if (type == COMPASS_READ)
   {
-    heading = compass.readHeading();
+    compass.read();
+    heading = compass.getAzimuth();
     logDebug(String("Compass: ") + String(heading));
     return heading;
   }

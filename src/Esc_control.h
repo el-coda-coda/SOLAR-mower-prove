@@ -8,6 +8,7 @@ void esc_on()
   {
     esc.writeMicroseconds(ESC_ON);
   }
+    else esc.writeMicroseconds(ESC_OFF);
   logDebug(String("ESC ON"));
 }
 
@@ -17,6 +18,7 @@ void esc_off()
   {
     esc.writeMicroseconds(ESC_OFF);
   }
+  else esc.writeMicroseconds(ESC_OFF);
   logDebug(String("ESC OFF"));
 }
 
