@@ -49,15 +49,10 @@ void setup()
     delay(1000);
   }
 }
-void loop() 
+void loop ()
 {
-  //compassOffSet = sensorReading(COMPASS_READ);
-  
-  //engines_forward(5);
+  logInfo(String(sensorReading(COMPASS_READ)));
   compassOffSet = sensorReading(COMPASS_READ);
-  logInfo(String("Inizio a girare"));
-  turn_right90();
-  //qmc_prova();
-  // logInfo(String("BUSSOLA: ") + String(sensorReading(COMPASS_READ)));
-  delay(1000);
+  engines_forward(2);
+  delay(2000);
 }

@@ -9,10 +9,10 @@ long qmc_straight()
     int movement_to_do;
     bool turn_left;
     bool turn_right;
-    if (bussola() < (compassOffSet - 2))   turn_left = true;
-    else turn_left = false;
-    if (bussola() > (compassOffSet + 2))   turn_right = true;
+    if (bussola() < (compassOffSet - 2))   turn_right = true;
     else turn_right = false;
+    if (bussola() > (compassOffSet + 2))   turn_left = true;
+    else turn_left = false;
     if (turn_right == false && turn_left == false)  movement_to_do = MOVEMENT_OK;
     if (turn_right) movement_to_do = CURVE_RIGHT;
     if (turn_left) movement_to_do = CURVE_LEFT;
@@ -20,7 +20,7 @@ long qmc_straight()
     return movement_to_do;
 }
 
-long qmc_curva (int curve, int xx)
+long qmc_curva_testW (int curve, int xx)
 {
     int deg = sensorReading(COMPASS_READ);
     if (curve == CURVE_RIGHT)   
@@ -40,13 +40,21 @@ long qmc_curva (int curve, int xx)
     logInfo(String("DIFF: ") + String(diff));
     return diff;
 }
-int qmc_curva_test (int zz)
+int qmc_curva (int degrees)
 {
     int compass1 = sensorReading(COMPASS_READ);
-    int degrees = zz;
-    while (sensorReading(COMPASS_READ) == compass1) delay(10);
-    degrees --;
-    return zz;
+    int compass2 = 0;
+    int xx = degrees;
+    while (xx >= 0)
+    {
+        if (compass2 != compass1)
+        {
+        xx --;
+        }
+        compass2 = sensorReading(COMPASS_READ);
+        logInfo(String("DEG DIFF: ") + String(xx));
+    }
+
 }
 
 void qmc_prova ()
