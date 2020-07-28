@@ -1,17 +1,12 @@
-long bussola ()
-{
-    int degrees = sensorReading(COMPASS_READ);
-    logVerbose(String("DEGREES: ") + String(degrees));
-    return degrees;
-}
 long qmc_straight()
 {
     int movement_to_do;
     bool turn_left;
     bool turn_right;
-    if (bussola() < (compassOffSet - 2))   turn_right = true;
+    int deg = sensorReading(COMPASS_READ);
+    if (deg < (compassOffSet - 2))   turn_right = true;
     else turn_right = false;
-    if (bussola() > (compassOffSet + 2))   turn_left = true;
+    if (deg > (compassOffSet + 2))   turn_left = true;
     else turn_left = false;
     if (turn_right == false && turn_left == false)  movement_to_do = MOVEMENT_OK;
     if (turn_right) movement_to_do = CURVE_RIGHT;
@@ -52,7 +47,7 @@ int qmc_curva (int degrees)
         xx --;
         }
         compass2 = sensorReading(COMPASS_READ);
-        logInfo(String("DEG DIFF: ") + String(xx));
+        logInfo(String("CURVE CD: ") + String(xx));
     }
 
 }

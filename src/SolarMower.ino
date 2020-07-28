@@ -45,8 +45,8 @@ void setup()
 }
 void loop ()
 {
-  logInfo(String(sensorReading(COMPASS_READ)));
-  compassOffSet = sensorReading(COMPASS_READ);
-  engines_forward(5);
+  go_forward1(200);
+  delay(2000);
+  turn_left180();
   delay(2000);
 }

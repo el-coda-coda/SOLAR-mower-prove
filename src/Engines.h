@@ -122,17 +122,12 @@ int engines_movement_controlled(double duration, int power_left, int power_right
           movement_result = sensorReading(US_READ);
           if (movement_result != MOVEMENT_OK) movement_result = MOVEMENT_OBSTACLE_FOUND;
           us_query = 0;
+          
+          timeOffset_qmc = millis();
+          if (qmc_straight() == CURVE_LEFT) engines_left(2);
+          if (qmc_straight() == CURVE_RIGHT)  engines_right(2);
+          time_qmc = millis() - timeOffset_qmc;
         }
-        timeOffset_qmc = millis();
-        if (qmc_straight() == CURVE_LEFT)
-        {
-          engines_left(3);
-        }
-        if (qmc_straight() == CURVE_RIGHT)
-        {
-          engines_right(3);
-        }
-        time_qmc = millis() - timeOffset_qmc; 
         if (qmc_straight() == MOVEMENT_OK)  engines(power_left, power_right);;
         curr_time = millis() - time_offset;
         curr_time -= time_qmc; 
