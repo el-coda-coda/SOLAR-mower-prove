@@ -45,8 +45,8 @@ void setup()
 }
 void loop ()
 {
-  go_forward1(200);
-  delay(2000);
-  turn_left180();
+  //go_forward1(200);
+  //delay(2000);
+  turn_left90();
   delay(2000);
 }

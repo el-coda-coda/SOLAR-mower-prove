@@ -38,20 +38,37 @@ long qmc_curva_testW (int curve, int xx)
 int qmc_curva (int degrees)
 {
     int compass1 = sensorReading(COMPASS_READ);
-    int compass2 = 0;
+    int compass2;
     int xx = degrees;
+
     while (xx >= 0)
     {
-        if (compass2 != compass1)
-        {
-        xx --;
-        }
         compass2 = sensorReading(COMPASS_READ);
         logInfo(String("CURVE CD: ") + String(xx));
+        if (compass1 != compass2)
+        {
+            xx --;
+            compass1 = compass2;
+        }
+        delay(10);
     }
-
 }
 
+qmc_curva_test (int direction, int deg)
+{
+    int compass1;
+    if (direction == CURVE_LEFT)    compass1 = compassOffSet - deg;
+    if (direction == CURVE_RIGHT)   compass1 = compassOffSet + deg;
+    if (compass1 > 360)  compass1 -= 360;
+    if (compass1 < 360) compass1 += 360;
+    if (compass1 > compassOffSet)
+    while (compass1 < sensorReading(COMPASS_READ))
+    {
+        delay(50);
+    }
+    
+
+}
 void qmc_prova ()
 {
     int cose = (int) (qmc_straight());

@@ -89,6 +89,7 @@ int go_forward1(float segment_length)
           movement_result = sensorReading(US_READ);   
         }
     }
+  engines_stop();
   return movement_result;
 }
 
