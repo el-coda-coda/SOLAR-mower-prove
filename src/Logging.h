@@ -22,7 +22,7 @@ void logDebug(String message) {
         }
         if(LOG_TO_LCD == true)
         {
-            if(riga == 5)  riga = 0;
+            if(riga == 4)  riga = 0;
             display_print(riga, message);
             riga++;
         }
@@ -37,7 +37,7 @@ void logVerbose(String message) {
         }
         if(LOG_TO_LCD == true)
         {
-            if(riga == 5)  riga = 0;
+            if(riga == 4)  riga = 0;
             display_print(riga, message);
             riga++;
         }
@@ -52,7 +52,7 @@ void logInfo(String message) {
         }
         if(LOG_TO_LCD == true)
         {
-            if(riga == 5)  riga = 0;
+            if(riga == 4)  riga = 0;
             display_print(riga, message);
             riga++;
         }
