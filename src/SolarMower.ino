@@ -48,5 +48,5 @@ void loop ()
 {
   delay(1000);
   qmc_prova_curva1(90, CURVE_RIGHT);
-
+  logInfo(String("giro finito"));
 }

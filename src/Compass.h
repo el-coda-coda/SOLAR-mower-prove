@@ -109,26 +109,27 @@ void qmc_prova ()
 qmc_prova_curva1 (int deg, int direction)
 {
     int compass1 = sensorReading(COMPASS_READ);
+    logVerbose(String("compass 1: ") + String(compass1));
     int compass2 = 0;
     int stop_deg = 0;
     int diff_deg = 0;
     if (direction == CURVE_LEFT)    stop_deg = compass1 - deg;
     if (direction == CURVE_RIGHT)   stop_deg = compass1 + deg;
-    logInfo(String("offset_qmc ") + String(stop_deg));
-    if (stop_deg > 360) stop_deg -= 360;
-    if (stop_deg < 360) stop_deg += 360;
-    while (true)
+    while (stop_deg > 360) stop_deg -= 360;
+    while (stop_deg < 0) stop_deg += 360;
+    while (diff_deg >= 0)
     {
         if (direction == CURVE_RIGHT)
         {
-            logInfo(String("offset_qmc ") + String(stop_deg));
+            logInfo(String("stop deg: ") + String(stop_deg));
+
             compass2 = sensorReading(COMPASS_READ);
             logInfo(String("compass 2 ") + String(compass2));
-            logInfo(String("diff m ") + String(stop_deg - compass2));
             diff_deg = stop_deg - compass2;
-            //if (diff_deg <= (stop_deg - 360))   diff_deg = stop_deg * 2;
+            if ((diff_deg < 0) && ((360 - compass2) == deg))   diff_deg += 360;
             logInfo(String("DIFF DEG: ") + String(diff_deg)); 
-            delay(100);
+            logInfo(String("deg_diff - 360: ") + String(diff_deg + 360));
+            delay(500);
         }
     }   
 }
