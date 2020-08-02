@@ -108,28 +108,43 @@ void qmc_prova ()
 
 qmc_prova_curva1 (int deg, int direction)
 {
-    int compass1 = sensorReading(COMPASS_READ);
+    int compass1 = 0;
+    for(int i = 1; 1 <= 10; i++)
+    {
+        compass1 += sensorReading(COMPASS_READ);
+    }
+    compass1 /= i;
     logVerbose(String("compass 1: ") + String(compass1));
     int compass2 = 0;
     int stop_deg = 0;
-    int diff_deg = 0;
+    int diff_deg = 1;
     if (direction == CURVE_LEFT)    stop_deg = compass1 - deg;
     if (direction == CURVE_RIGHT)   stop_deg = compass1 + deg;
     while (stop_deg > 360) stop_deg -= 360;
     while (stop_deg < 0) stop_deg += 360;
-    while (diff_deg >= 0)
+    while (diff_deg > 0)
     {
         if (direction == CURVE_RIGHT)
         {
-            logInfo(String("stop deg: ") + String(stop_deg));
-
+            logDebug(String("STOP_DEG: ") + String(stop_deg));
             compass2 = sensorReading(COMPASS_READ);
-            logInfo(String("compass 2 ") + String(compass2));
+            logDebug(String("COMPASS2: ") + String(compass2));
             diff_deg = stop_deg - compass2;
-            if ((diff_deg < 0) && ((360 - compass2) == deg))   diff_deg += 360;
-            logInfo(String("DIFF DEG: ") + String(diff_deg)); 
-            logInfo(String("deg_diff - 360: ") + String(diff_deg + 360));
-            delay(500);
+            if (diff_deg < - 5) diff_deg = 1;        
+            //if ((diff_deg < 0) && ((360 - compass2) == deg))   diff_deg += 360;
+            logInfo(String("DIFF_DEG: ") + String(diff_deg));
+            logDebug(String("ehi"));   //+ String(diff_deg + 360)
         }
+        if (direction == CURVE_LEFT)
+        {
+            logDebug(String("STOP_DEG: ") + String(stop_deg));
+            compass2 = sensorReading(COMPASS_READ);
+            logDebug(String("COMPASS2: ") + String(compass2));
+            diff_deg = compass2 - stop_deg;
+            if (diff_deg < -5)  diff_deg = 1;
+            logInfo(String("DIFF_DEG: ") + String(diff_deg));
+            logDebug(String("ehi"));
+        }
+        delay(100);
     }   
 }
