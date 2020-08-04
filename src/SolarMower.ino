@@ -43,10 +43,33 @@ void setup()
   digitalWrite(Panel_PIN, HIGH);
   delay(300);
   compassOffSet = sensorReading(COMPASS_READ);
+  // turn_left90();
+  // turn_left90();
+  // turn_left90();
+  // turn_left90();
 }
 void loop ()
 {
-  delay(1000);
-  turn_left90();
-  logInfo(String("giro finito"));
+  delay(2000);
+  //int qmc_result = qmc_straight1();
+  // if (qmc_result <= CURVE_LEFT) 
+  // {
+  //   logInfo(String("MTD: curve left: ") + String(qmc_straight_1r(qmc_result)));
+  //   engines(-ENGINE_MAX, ENGINE_MAX);
+  //   while (qmc_straight_1r(qmc_result) != MOVEMENT_OK)  qmc_result = qmc_straight1();
+  //   engines_stop();
+  // }
+  // if (qmc_result >= CURVE_RIGHT)  
+  // {
+  //   logInfo(String("MTD: curve right: ") + String(qmc_straight_1r(qmc_result)));
+  //   engines(ENGINE_MAX , -ENGINE_MAX);
+  //   while (qmc_straight_1r(qmc_result) != MOVEMENT_OK)  qmc_result = qmc_straight1();;
+  //   engines_stop();
+  // }
+
+  //if (qmc_result == MOVEMENT_OK)  logInfo(String("MTD: MOVEMENT OK"));
+  rectangle_path(100, 70);
+  //go_forward1(50);
+  //turn_left90();
+  //logInfo(String("giro finito"));
 }

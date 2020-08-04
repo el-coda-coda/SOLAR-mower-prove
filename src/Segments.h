@@ -68,8 +68,7 @@ int go_back(float segment_length) {
 int go_forward1(float segment_length) 
 {
     compassOffSet = sensorReading(COMPASS_READ);
-    int movement_result=0;
-    int count = 0;
+    int movement_result = 0;
     float seg_time = segment_time(WHEEL_DIAMETER, segment_length);
     //logDebug(String("Go forwardo for time (sec) ") + String(seg_time));
     //logDebug(String("Segment length (cm): ") + String(segment_length));

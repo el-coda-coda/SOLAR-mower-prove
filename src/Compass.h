@@ -4,14 +4,56 @@ long qmc_straight()
     bool turn_left;
     bool turn_right;
     int deg = sensorReading(COMPASS_READ);
-    if (deg < (compassOffSet - 2))   turn_right = true;
+    if (deg < (compassOffSet - 4))   turn_right = true;
     else turn_right = false;
-    if (deg > (compassOffSet + 2))   turn_left = true;
+    if (deg > (compassOffSet + 4))   turn_left = true;
     else turn_left = false;
     if (turn_right == false && turn_left == false)  movement_to_do = MOVEMENT_OK;
     if (turn_right) movement_to_do = CURVE_RIGHT;
     if (turn_left) movement_to_do = CURVE_LEFT;
     logVerbose(String ("Movement compass: ") + String(movement_to_do));
+    return movement_to_do;
+}
+int qmc_straight1()
+{
+    int  movement_to_do = MOVEMENT_OK;
+    int deg = sensorReading(COMPASS_READ);
+    int diff_deg;
+    if (deg > compassOffSet)    
+    {
+        diff_deg = deg - compassOffSet;
+        movement_to_do = CURVE_LEFT;
+    }
+    if (deg < compassOffSet)    
+    {
+        diff_deg = compassOffSet - deg;
+        movement_to_do = CURVE_RIGHT;
+    }
+    if (deg > compassOffSet + 200)  
+    {
+        diff_deg = compassOffSet + 360 - deg;
+        movement_to_do = CURVE_LEFT;
+    }
+    if (deg < compassOffSet - 200)  
+    {
+        diff_deg = compassOffSet - 360 + deg;
+        movement_to_do = CURVE_RIGHT;
+    }
+    if (diff_deg >= 3)
+    {
+        if (movement_to_do == CURVE_RIGHT)   movement_to_do += diff_deg;
+        if (movement_to_do == CURVE_LEFT)    movement_to_do -= diff_deg;
+    }  
+    else    movement_to_do = MOVEMENT_OK;
+    return movement_to_do;
+}
+
+int qmc_straight_1r(int qmc_straight)
+{
+    int movement_to_do;
+    if (qmc_straight <= CURVE_LEFT) movement_to_do = ((qmc_straight + 90) * -1) - 2;
+    if (qmc_straight >= CURVE_RIGHT)   movement_to_do = qmc_straight - 90 - 2;
+    if (qmc_straight == MOVEMENT_OK)    movement_to_do = MOVEMENT_OK;     
     return movement_to_do;
 }
 
@@ -55,7 +97,7 @@ int qmc_curva (int degrees)
     }
 }
 
-qmc_curva_test (int direction, int deg)
+int qmc_curva_test (int direction, int deg)
 {
     int compass1 = sensorReading(COMPASS_READ);
     int compass2;
@@ -106,45 +148,50 @@ void qmc_prova ()
     
 }
 
-qmc_prova_curva1 (int deg, int direction)
+int qmc_prova_curva1(int deg, int dir)
 {
     int compass1 = 0;
-    for(int i = 1; 1 <= 10; i++)
+    if (COMPASS_MEDIA)
     {
-        compass1 += sensorReading(COMPASS_READ);
+        for(int i=0; i<10; i++)
+        {
+            compass1 += sensorReading(COMPASS_READ);
+            delay(10);
+        }
+        compass1 /= 10;
     }
-    compass1 /= i;
-    logVerbose(String("compass 1: ") + String(compass1));
+    else    compass1 = compassOffSet;
+    logInfo(String("compass 1: ") + String(compass1));
     int compass2 = 0;
     int stop_deg = 0;
     int diff_deg = 1;
-    if (direction == CURVE_LEFT)    stop_deg = compass1 - deg;
-    if (direction == CURVE_RIGHT)   stop_deg = compass1 + deg;
+    if (dir == CURVE_LEFT)    stop_deg = compass1 - deg;
+    if (dir == CURVE_RIGHT)   stop_deg = compass1 + deg;
     while (stop_deg > 360) stop_deg -= 360;
     while (stop_deg < 0) stop_deg += 360;
+    logInfo(String("STOP_DEG: ") + String(stop_deg));
     while (diff_deg > 0)
     {
-        if (direction == CURVE_RIGHT)
+        if (dir == CURVE_RIGHT)
         {
             logDebug(String("STOP_DEG: ") + String(stop_deg));
             compass2 = sensorReading(COMPASS_READ);
             logDebug(String("COMPASS2: ") + String(compass2));
             diff_deg = stop_deg - compass2;
-            if (diff_deg < - 5) diff_deg = 1;        
-            //if ((diff_deg < 0) && ((360 - compass2) == deg))   diff_deg += 360;
-            logInfo(String("DIFF_DEG: ") + String(diff_deg));
-            logDebug(String("ehi"));   //+ String(diff_deg + 360)
+            if (diff_deg < -5) diff_deg = 1;        
+            logDebug(String("DIFF_DEG: ") + String(diff_deg));
+            logDebug(String("ehi"));
         }
-        if (direction == CURVE_LEFT)
+        if (dir == CURVE_LEFT)
         {
             logDebug(String("STOP_DEG: ") + String(stop_deg));
             compass2 = sensorReading(COMPASS_READ);
             logDebug(String("COMPASS2: ") + String(compass2));
             diff_deg = compass2 - stop_deg;
             if (diff_deg < -5)  diff_deg = 1;
-            logInfo(String("DIFF_DEG: ") + String(diff_deg));
+            logDebug(String("DIFF_DEG: ") + String(diff_deg));
             logDebug(String("ehi"));
         }
-        delay(100);
+        delay(50);
     }   
 }

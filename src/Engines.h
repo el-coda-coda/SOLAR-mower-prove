@@ -78,14 +78,14 @@ int engines_movement(double duration, int power_left, int power_right)
 
 //Moves left at max power for <duration> seconds
 int engines_left(int xx) {
-  engines(0, ENGINE_MAX);
+  engines(0, ENGINE_MAX-50);
   qmc_prova_curva1(xx, CURVE_LEFT);
   engines_stop();
 }
 
 //Moves right at max power
 int engines_right(int xx) {
-  engines(ENGINE_MAX, 0);
+  engines(ENGINE_MAX-50, 0);
   qmc_prova_curva1(xx, CURVE_RIGHT);
   engines_stop();
 }
@@ -112,10 +112,10 @@ int engines_movement_controlled(double duration, int power_left, int power_right
     int movement_result = 0;
     long time_qmc = 0;
     long timeOffset_qmc = 0;
+    int qmc_result = 0;
     while ((curr_time < duration_millseconds) && movement_result == MOVEMENT_OK)
     {
-        // if (power_right < 0 && power_left < 0)  engines(power_left+ENIGNE_LEFT_OFFSET, power_right+ENGINE_RIGHT_OFFSET);
-        // else engines(power_left-ENIGNE_LEFT_OFFSET, power_right-ENGINE_RIGHT_OFFSET);
+        
         time_qmc = 0;
         if (us_query == 2) 
         {
@@ -124,11 +124,28 @@ int engines_movement_controlled(double duration, int power_left, int power_right
           us_query = 0;
           
           timeOffset_qmc = millis();
-          if (qmc_straight() == CURVE_LEFT) engines_left(2);
-          if (qmc_straight() == CURVE_RIGHT)  engines_right(2);
+          qmc_result = qmc_straight1();
+          if (qmc_result <= CURVE_LEFT) 
+          {
+            logInfo(String("MTD: curve left: ") + String(qmc_straight_1r(qmc_result)));
+            engines(-ENGINE_MAX, ENGINE_MAX);
+            while (qmc_straight_1r(qmc_result) != MOVEMENT_OK)  qmc_result = qmc_straight1();
+            engines_stop();
+          }
+          if (qmc_result >= CURVE_RIGHT)  
+          {
+            logInfo(String("MTD: curve right: ") + String(qmc_straight_1r(qmc_result)));
+            engines(ENGINE_MAX , -ENGINE_MAX);
+            while (qmc_straight_1r(qmc_result) != MOVEMENT_OK)  qmc_result = qmc_straight1();;
+            engines_stop();
+          }
           time_qmc = millis() - timeOffset_qmc;
         }
-        if (qmc_straight() == MOVEMENT_OK)  engines(power_left, power_right);;
+        if (qmc_result == MOVEMENT_OK)  
+        {
+          if (power_right < 0 && power_left < 0)  engines(power_left+ENIGNE_LEFT_OFFSET, power_right+ENGINE_RIGHT_OFFSET);
+          else engines(power_left-ENIGNE_LEFT_OFFSET, power_right-ENGINE_RIGHT_OFFSET);
+        }
         curr_time = millis() - time_offset;
         curr_time -= time_qmc; 
         us_query ++;

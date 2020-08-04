@@ -15,14 +15,13 @@ void sensorInit()
   ICutOffset /= i;
   logDebug(String("PANEL SETUP: ") + String(IPanelOffset));
   compass.init();
-  compass.read();
   logDebug(String("COMPASS SETUP: RUOTA IL ROBOT"));
 }
 
 float sensorReading(int type)
 {
   long curr_time_start = millis();
-  long curr_time_end=0;
+  long curr_time_end = 0;
   logVerbose(String("Sensor reading start-time: ") + String(curr_time_start));
   if (type == BATTERY_READ)
   {
@@ -120,9 +119,11 @@ float sensorReading(int type)
     }
   }
   if (type == COMPASS_READ)
-  {
+  {  
     compass.read();
-    heading = compass.getAzimuth();
+    heading = 0;
+    for (int i = 0; i<10; i++)  heading += compass.getAzimuth();
+    heading /= 10;
     logDebug(String("Compass: ") + String(heading));
     return heading;
   }

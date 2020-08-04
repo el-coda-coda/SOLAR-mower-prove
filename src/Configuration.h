@@ -100,6 +100,7 @@ int PEN=3;
 #define LOG_LEVEL  1    //1 INFO, 5 DEBUG , 7 VERBOSE DEBUG
 #define RECTANGLE_MODE_1    1
 #define RECTANGLE_MODE_0    0
+#define COMPASS_MEDIA   true
 
 //variables
 float VBat;               // Battery voltage [V]

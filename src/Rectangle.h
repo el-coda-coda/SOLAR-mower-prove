@@ -22,6 +22,7 @@ void rectangle_path (int lato_piano, int lato_inclinato)
             {
                 logDebug(String("GO Y"));
                 turn_left90();
+                delay(500);
                 if (passaggio)  
                 {
                     go_back((ROBOT_LARGE - BLADE_LARGE)/2);
@@ -41,6 +42,7 @@ void rectangle_path (int lato_piano, int lato_inclinato)
             {
                 logDebug(String("GO Y"));
                 turn_right90();
+                delay(500);
                 if (passaggio)  
                 {
                     go_back((ROBOT_LARGE - BLADE_LARGE)/2);
@@ -60,6 +62,7 @@ void rectangle_path (int lato_piano, int lato_inclinato)
         logDebug(String("GO X"));
         movement_result = go_forward1(lato_piano);
         engines_stop();
+        delay(500);
         if (movement_result!= MOVEMENT_OK)
         {
             if (movement_result == GO_BACK)
