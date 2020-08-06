@@ -1,6 +1,7 @@
 #include <EEPROM.h>
 #include <SoftwareSerial.h>
 #include <Wire.h>
+#include <QMC5883L.h>
 #include <QMC5883LCompass.h>
 #include <LiquidCrystal_I2C.h>
 #include "Configuration.h"
@@ -42,7 +43,7 @@ void setup()
   sensorReading(PANEL_READ_AMP);  
   digitalWrite(Panel_PIN, HIGH);
   delay(300);
-  compassOffSet = sensorReading(COMPASS_READ);
+  compassOffSet = 0;
   // turn_left90();
   // turn_left90();
   // turn_left90();
@@ -68,8 +69,13 @@ void loop ()
   // }
 
   //if (qmc_result == MOVEMENT_OK)  logInfo(String("MTD: MOVEMENT OK"));
-  rectangle_path(100, 70);
+  
   //go_forward1(50);
   //turn_left90();
-  //logInfo(String("giro finito"));
+  esc_on();
+  go_forward1(20);
+  //rectangle_path(100, 70);
+  //qmc_prova_curva1(90, CURVE_LEFT);
+  turn_left90();
+  logInfo(String("qmc: ") + String(sensorReading(COMPASS_READ)));
 }

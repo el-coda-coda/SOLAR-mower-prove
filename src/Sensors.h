@@ -15,6 +15,7 @@ void sensorInit()
   ICutOffset /= i;
   logDebug(String("PANEL SETUP: ") + String(IPanelOffset));
   compass.init();
+  compass.setCalibration(-356, 1227, -708, 1031, -991, 0);
   logDebug(String("COMPASS SETUP: RUOTA IL ROBOT"));
 }
 
@@ -119,11 +120,16 @@ float sensorReading(int type)
     }
   }
   if (type == COMPASS_READ)
-  {  
+  { 
     compass.read();
-    heading = 0;
-    for (int i = 0; i<10; i++)  heading += compass.getAzimuth();
-    heading /= 10;
+    heading = compass.getAzimuth();
+    // for (int i = 0; i<5; i++)  
+    // {
+    //   compass.read();
+    //   heading += compass.getAzimuth();
+    //   delay(50);
+    // }
+    // heading /= 5;
     logDebug(String("Compass: ") + String(heading));
     return heading;
   }

@@ -17,7 +17,7 @@ float segment_time(int wheel_diamater,float segment_length)
 
 int turn_right_xx (int grade)
 {
-  compassOffSet = sensorReading(COMPASS_READ);
+  setCompassOffset();
   int movement_result=0;
   engines_right(grade);
   return movement_result;
@@ -25,7 +25,7 @@ int turn_right_xx (int grade)
 
 int turn_left_xx (int grade)
 {
-  compassOffSet = sensorReading(COMPASS_READ);
+  setCompassOffset();
   int movement_result=0;
   engines_left(grade);
   return movement_result;
@@ -67,7 +67,7 @@ int go_back(float segment_length) {
  
 int go_forward1(float segment_length) 
 {
-    compassOffSet = sensorReading(COMPASS_READ);
+    setCompassOffset();
     int movement_result = 0;
     float seg_time = segment_time(WHEEL_DIAMETER, segment_length);
     //logDebug(String("Go forwardo for time (sec) ") + String(seg_time));
@@ -95,7 +95,7 @@ int go_forward1(float segment_length)
 int go_forward(float segment_length, int &x_array) 
 {
     int movement_result=0;
-    compassOffSet = sensorReading(COMPASS_READ);
+    setCompassOffset();
     float seg_time = 0.0;
     seg_time = segment_time(WHEEL_DIAMETER, 5);
     logDebug(String("Segment length (cm): ") + String(segment_length));

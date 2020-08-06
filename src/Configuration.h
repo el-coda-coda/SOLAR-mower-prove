@@ -94,13 +94,13 @@ int PEN=3;
 #define RECTANGLE_ENABLED true
 #define MOVEMENT_ENABLED true
 #define ULTRASONIC_ENABLED false
-#define ESC_ENABLED false
+#define ESC_ENABLED true
 #define LOG_TO_SERIAL true
 #define LOG_TO_LCD true
 #define LOG_LEVEL  1    //1 INFO, 5 DEBUG , 7 VERBOSE DEBUG
 #define RECTANGLE_MODE_1    1
 #define RECTANGLE_MODE_0    0
-#define COMPASS_MEDIA   true
+#define COMPASS_MEDIA   false
 
 //variables
 float VBat;               // Battery voltage [V]
@@ -148,7 +148,7 @@ int  ON_OFF_ESC_PIN = 4;
 int rectangle_mode = 0;
 //int x_array = 0;
 //int y_array = 0;
-float heading;
+int heading;
 int compassOffSet; 
 int curve_to_do;
 int variabile;
