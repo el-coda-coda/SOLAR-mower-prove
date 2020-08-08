@@ -1,5 +1,6 @@
 void setCompassOffset()
 {
+    compassOffSet = 0;
     compassOffSet += sensorReading(COMPASS_READ);
     delay(2000);
     compassOffSet += sensorReading(COMPASS_READ);
@@ -164,8 +165,8 @@ int qmc_prova_curva1(int deg, int dir)
     logInfo(String("compass 1: ") + String(compass1));
     int stop_deg = 0;
     int diff_deg = 100;
-    if (dir == CURVE_LEFT)    stop_deg = compass1 - deg + 1;
-    if (dir == CURVE_RIGHT)   stop_deg = compass1 + deg - 1;
+    if (dir == CURVE_LEFT)    stop_deg = compass1 - deg;
+    if (dir == CURVE_RIGHT)   stop_deg = compass1 + deg;
     while (stop_deg > 360) stop_deg -= 360;
     while (stop_deg < 0) stop_deg += 360;
     logInfo(String("STOP_DEG: ") + String(stop_deg));

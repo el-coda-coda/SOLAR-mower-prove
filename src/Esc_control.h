@@ -1,5 +1,3 @@
-#include <Servo.h> 
-
 Servo esc;
 
 void esc_on()
@@ -8,7 +6,7 @@ void esc_on()
   {
     esc.writeMicroseconds(ESC_ON);
   }
-    else esc.writeMicroseconds(ESC_OFF);
+  else esc.writeMicroseconds(ESC_OFF);
   logDebug(String("ESC ON"));
 }
 

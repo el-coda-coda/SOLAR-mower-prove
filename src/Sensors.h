@@ -15,7 +15,8 @@ void sensorInit()
   ICutOffset /= i;
   logDebug(String("PANEL SETUP: ") + String(IPanelOffset));
   compass.init();
-  compass.setCalibration(-356, 1227, -708, 1031, -991, 0);
+  //compass.setCalibration(-356, 1227, -708, 1031, -991, 0); // claibrazione in piano
+  compass.setCalibration(-182, 807, -441, 677, -1066, 0); // calibrazione in media pendenza
   logDebug(String("COMPASS SETUP: RUOTA IL ROBOT"));
 }
 

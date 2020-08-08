@@ -1,6 +1,7 @@
 #include <EEPROM.h>
 #include <SoftwareSerial.h>
 #include <Wire.h>
+#include <Servo.h> 
 #include <QMC5883L.h>
 #include <QMC5883LCompass.h>
 #include <LiquidCrystal_I2C.h>
@@ -19,7 +20,7 @@
 
 void setup() 
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Wire.begin();
   pinMode(PWMA_PIN, OUTPUT);
   pinMode(DIRA_PIN, OUTPUT);    
@@ -48,10 +49,12 @@ void setup()
   // turn_left90();
   // turn_left90();
   // turn_left90();
+  esc_on();
 }
 void loop ()
 {
   delay(2000);
+  
   //int qmc_result = qmc_straight1();
   // if (qmc_result <= CURVE_LEFT) 
   // {
@@ -72,10 +75,10 @@ void loop ()
   
   //go_forward1(50);
   //turn_left90();
-  esc_on();
-  go_forward1(20);
-  //rectangle_path(100, 70);
+  //esc_on();
+  //go_forward1(100);
+  rectangle_path(100, 100);
   //qmc_prova_curva1(90, CURVE_LEFT);
-  turn_left90();
+  //turn_left90();
   logInfo(String("qmc: ") + String(sensorReading(COMPASS_READ)));
 }
