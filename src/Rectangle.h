@@ -12,17 +12,28 @@ void rectangle_path (int lato_piano, int lato_inclinato)
     int ultimo_passaggio = ROBOT_LARGE - avanzo;
     int x_array = lato_piano;
     int y_array = lato_inclinato;
+
+    //Passate: numero di volte che devo passare per coprire tutto il lato inclinato (direzione Y)
+    //a: contatore di passate 
     while (passate >= a)
-    {   x_array = lato_piano;
+    {   
+        x_array = lato_piano;
         y_array -= ROBOT_LARGE;
         logDebug(String("y_array: ") + String(y_array)); 
+
+        //effettuo una curva solo se ho già fatto un passaggio
         if (a > 0)
         {
+            //query: determina se ruotare verso destra o sinistra per "spazzolare" il lato Y
+            //sono tutte curve da 180 gradi costituite da turn90 + arretra + turn90 verso la direzione
+            //decisa da query
             if (query == 0 )
             {
                 logDebug(String("GO Y"));
                 turn_left90();
                 delay(500);
+
+                //passaggio: booleano che dice se ci sta ancora un passaggio "intero" (true) o se il robot è troppo largo (false)
                 if (passaggio)  
                 {
                     go_back((ROBOT_LARGE - BLADE_LARGE)/2);
@@ -59,10 +70,16 @@ void rectangle_path (int lato_piano, int lato_inclinato)
                 query = 0;
             }
         }
+
+
+        //Parte dritta del segmento da segare
         logDebug(String("GO X"));
         movement_result = go_forward1(lato_piano);
         engines_stop();
         delay(500);
+
+
+        //Utile nel caso di ultrasuoni
         if (movement_result!= MOVEMENT_OK)
         {
             if (movement_result == GO_BACK)
@@ -77,6 +94,8 @@ void rectangle_path (int lato_piano, int lato_inclinato)
                 aggira(movement_result, x_array, y_array);
             }        
         }
+
+        //Verifico se il robot "si può permettere" ancora un passaggio intero
         if (y_array < ROBOT_LARGE)
         {
             passaggio = false;
@@ -85,7 +104,7 @@ void rectangle_path (int lato_piano, int lato_inclinato)
         {
             passaggio = true;
         }    
-        b++;
+
         a++;
     }
 }

@@ -77,16 +77,16 @@ int engines_movement(double duration, int power_left, int power_right)
 
 
 //Moves left at max power for <duration> seconds
-int engines_left(int xx) {
+int engines_left(int degrees) {
   engines(0, ENGINE_MAX);
-  qmc_prova_curva1(xx, CURVE_LEFT);
+  qmc_prova_curva1(degrees, CURVE_LEFT);
   engines_stop();
 }
 
 //Moves right at max power
-int engines_right(int xx) {
+int engines_right(int degrees) {
   engines(ENGINE_MAX, 0);
-  qmc_prova_curva1(xx, CURVE_RIGHT);
+  qmc_prova_curva1(degrees, CURVE_RIGHT);
   engines_stop();
 }
 
